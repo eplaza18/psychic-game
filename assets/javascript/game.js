@@ -11,10 +11,18 @@ var lossText = document.getElementById('losses-text');
 var lettersGuessed = document.getElementById("letters-guessed")
 var guessesLeft = document.getElementById("guesses-left");
 
-//Computer guesses random character from array.
-var computerGuess = computerChoice[Math.floor(Math.random() * computerChoice.length)];
-console.log(computerGuess);
-
+function randomLetter() {
+    computerGuess = computerChoice[Math.floor(Math.random() * computerChoice.length)];
+    console.log(computerGuess);
+ }
+ //this code runs the function
+ randomLetter();
+ 
+ function resetGuesses() {
+    randomLetter();
+    guesses = 10;
+ }
+    
 document.onkeyup = function(event) {
     // Determines which key was pressed.
     var userGuess = event.key;
@@ -22,7 +30,8 @@ document.onkeyup = function(event) {
     //If win, tally one win and reset game
     if (userGuess === computerGuess) {
         wins++;
-        alert ("You Win!");       
+        alert ("You Win!");
+        resetGuesses();       
     }
 
     //Write letter guessed, and take one guess away, continue game.
@@ -38,13 +47,12 @@ document.onkeyup = function(event) {
         
         if (guesses === 1) {
             loss++;
-            alert ("You Lose, try again.")
-            // location.reload();
+            alert ("You Lose, try again.");
+            resetGuesses();
         }
+           
+        winsText.textContent = 'Wins: ' + wins;
+        lossText.textContent = 'Losses: ' + loss;
         guesses--;
-       }
-       winsText.textContent = 'Wins: ' + wins;
-       lossText.textContent = 'Losses: ' + loss;
-}     
-    //Take 1 guess away, repeat until none left, write loss, restart
-
+    }
+}
